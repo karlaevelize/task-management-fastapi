@@ -36,3 +36,8 @@ def read_lists(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)):
   if lists is None:
     raise HTTPException(status_code=404, detail="No lists found")
   return lists
+
+# create list
+@app.post("/lists", response_model=schemas.List)
+def create_list(list: schemas.List, db: Session = Depends(get_db)):
+  return crud.create_list(db, list=list)
