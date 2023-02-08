@@ -1,1 +1,27 @@
+from typing import List
+from fastapi import Depends, FastAPI, HTTPException
+from sqlalchemy.orm import Session
 
+from app import crud, models, database, schemas
+
+# from app.database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=database.engine)
+
+app = FastAPI()
+
+# Dependency
+def get_db():
+  db = database.SessionLocal()
+  try:
+    yield db
+  finally:
+    db.close()
+
+# get list with its items
+@app.get("/lists", response_model=List[schemas.List])
+def read_lists(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)):
+  lists = crud.get_lists(db, skip=skip, limit=limit)
+  if lists is None:
+    raise HTTPException(status_code=404, detail="No lists found")
+  return lists

@@ -30,3 +30,7 @@ target_metadata = Base.metadata
 ```shell
 $ alembic revision --autogenerate -m "First revision"
 ```
+
+```shell
+$ pipenv run alembic upgrade head
+```

@@ -1,10 +1,9 @@
 from typing import Union
-
 from pydantic import BaseModel
 
 # item stuff
 class ItemBase(BaseModel):
-    title: str
+    name: str
     description: Union[str, None] = None
 
 class ItemCreate(ItemBase):
@@ -12,7 +11,7 @@ class ItemCreate(ItemBase):
 
 class Item(ItemBase):
     id: int
-    owner_id: int
+    list_id: int
 
     class Config:
         orm_mode = True
@@ -20,13 +19,14 @@ class Item(ItemBase):
 # list stuff
 class ListBase(BaseModel):
     name: str
+    color: str
+    order: int
 
 class ListCreate(ListBase):
     pass
 
 class List(ListBase):
     id: int
-    is_active: bool
     items: list[Item] = []
 
     class Config:
