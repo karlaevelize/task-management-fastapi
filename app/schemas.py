@@ -10,7 +10,6 @@ class ItemCreate(ItemBase):
     pass
 
 class Item(ItemBase):
-    id: int
     list_id: int
 
     class Config:
@@ -19,14 +18,13 @@ class Item(ItemBase):
 # list stuff
 class ListBase(BaseModel):
     name: str
-    color: str
+    color: Union[str, None] = None
     order: int
 
 class ListCreate(ListBase):
     pass
 
 class List(ListBase):
-    id: int
     items: list[Item] = []
 
     class Config:
