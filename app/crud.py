@@ -7,6 +7,24 @@ def get_lists(db: Session, skip: int = 0, limit: int = 20):
     print(lists)
     return lists
 
+# create list
+def create_list(db: Session, list: schemas.List):
+    db_list = models.List(**list.dict())
+    db.add(db_list)
+    db.commit()
+    db.refresh(db_list)
+    return db_list
+
+# delete list
+def delete_list(db: Session, list_id: int):
+    list = db.query(models.List).filter(models.List.id == list_id).first()
+    db.delete(list)
+    db.commit()
+    return "deleted"
+
+
+# LATER IMPLEMENTATION
+
 # get one list
 def get_list(db: Session, list_id: int):
     list = db.query(models.List).filter(models.List.id == list_id).first()
@@ -19,11 +37,5 @@ def get_list_by_name(db: Session, name: str):
     print(list)
     return list
 
-# create list
-def create_list(db: Session, list: schemas.List):
-    db_list = models.List(**list.dict())
-    db.add(db_list)
-    db.commit()
-    db.refresh(db_list)
-    return db_list
+
 

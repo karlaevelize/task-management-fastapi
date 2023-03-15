@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 # item stuff
 class ItemBase(BaseModel):
+    id: int
     name: str
     description: Union[str, None] = None
 
@@ -17,6 +18,7 @@ class Item(ItemBase):
 
 # list stuff
 class ListBase(BaseModel):
+    id: int
     name: str
     color: Union[str, None] = None
     order: int

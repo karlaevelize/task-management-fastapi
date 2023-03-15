@@ -41,3 +41,8 @@ def read_lists(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)):
 @app.post("/lists", response_model=schemas.List)
 def create_list(list: schemas.List, db: Session = Depends(get_db)):
   return crud.create_list(db, list=list)
+
+# delete list
+@app.delete("/lists", response_model=str)
+def delete_lists(list_id: int, db: Session = Depends(get_db)):
+  return crud.delete_list(db, list_id=list_id)
